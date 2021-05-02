@@ -1,6 +1,4 @@
 #include "Hawk.h"
-#include <iostream>
-
 
 class Sandbox : public Hawk::Application {
 
@@ -14,8 +12,7 @@ public:
 
 Hawk::Application* Hawk::CreateApplication() {
 
-	Sandbox* sandbox = new Sandbox();
-	return sandbox;
+	return new Sandbox();
 
 
 }

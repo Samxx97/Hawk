@@ -1,8 +1,10 @@
 #include "hawk_exports.h"
 
+
 namespace Hawk {
 
 	class HAWK_API Application {
+
 
 	public:
 
@@ -10,6 +12,8 @@ namespace Hawk {
 		virtual ~Application();
 
 		void Run();
+		void Init();
+
 
 
 	};

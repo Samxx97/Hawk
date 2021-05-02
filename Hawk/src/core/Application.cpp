@@ -1,4 +1,5 @@
 #include "core/Application.h"
+#include "core/log.h"
 
 namespace Hawk {
 
@@ -10,6 +11,15 @@ namespace Hawk {
 	void Application::Run() {
 
 		while (true);
+	}
+
+	void Application::Init() {
+
+
+		Log::init();
+		HK_CORE_TRACE("Initialization started!");
+
+
 	}
 
 }
