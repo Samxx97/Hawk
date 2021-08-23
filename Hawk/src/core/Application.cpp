@@ -1,6 +1,8 @@
 #include "core/Application.h"
 #include "core/Core.h"
 #include "core/log.h"
+#include "core/Platforms/AnyPlatformWindow.h"
+#include "GLFW/glfw3.h"
 
 namespace Hawk {
 
@@ -20,6 +22,7 @@ namespace Hawk {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 
+			m_Window->OnUpdate();
 
 		}
 	}
@@ -32,6 +35,8 @@ namespace Hawk {
 
 		Log::init();
 		HK_CORE_TRACE("Initializing Application");
+
+		m_Window = std::unique_ptr<Window>(Window::Create(m_EventDispatcher));
 
 
 		//Register Application EventHandlers

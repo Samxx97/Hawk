@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp")
+﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 
@@ -23,10 +23,20 @@ FetchContent_Declare(spdlog
 					 GIT_TAG  v1.8.5)
 
 
-FetchContent_MakeAvailable(spdlog)
+#GLFW library
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only)
+FetchContent_Declare(glfw
+					GIT_REPOSITORY https://github.com/glfw/glfw.git
+					GIT_TAG 3.3.4)
+
+
+
+FetchContent_MakeAvailable(spdlog glfw)
 
 
 
 
+target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw)
