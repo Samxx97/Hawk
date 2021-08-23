@@ -1,6 +1,6 @@
 #include "core/Application.h"
 #include "core/Core.h"
-#include "core/log.h"
+
 #include "core/Platforms/AnyPlatformWindow.h"
 #include "GLFW/glfw3.h"
 

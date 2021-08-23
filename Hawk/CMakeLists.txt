@@ -7,6 +7,9 @@ target_include_directories(Hawk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 
 target_compile_definitions(Hawk PRIVATE HAWK_BUILD_DLL HK_ENABLE_ASSERTS)
 
+target_precompile_headers(Hawk PRIVATE
+							   include/hkpch.h)
+
 include(GenerateExportHeader)
 
 generate_export_header(Hawk 

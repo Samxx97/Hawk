@@ -1,10 +1,9 @@
-#include <memory>
+#pragma once
 
 #include "hawk_exports.h"
 #include "spdlog/spdlog.h"
 
 namespace Hawk {
-
 
 	class HAWK_API Log {
 
