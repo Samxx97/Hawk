@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp")
+﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp" "src/core/LayerStack.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 

@@ -4,6 +4,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Window.h"
+#include "LayerStack.h"
 
 namespace Hawk {
 
@@ -16,8 +17,16 @@ namespace Hawk {
 		virtual ~Application() = default;
 
 		void Run();
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
 		inline Window& GetWindow() { return *m_Window; };
 		inline static  Application& GetInstance() { return *s_Instance; }
+
+
+	protected:
+
 
 
 	private:
@@ -31,6 +40,8 @@ namespace Hawk {
 
 		EventDispatcher m_EventDispatcher;
 		std::unique_ptr<Window> m_Window;
+		LayerStack m_LayerStack;
+
 
 		bool m_Running = true;
 

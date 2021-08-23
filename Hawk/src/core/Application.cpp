@@ -1,8 +1,13 @@
+
 #include "core/Application.h"
 #include "core/Core.h"
 
 #include "core/Platforms/AnyPlatformWindow.h"
+
+
 #include "glad/glad.h"
+
+#include  "core/ImGui/ImGuiLayer.h"
 #include "GLFW/glfw3.h"
 
 namespace Hawk {
@@ -16,6 +21,7 @@ namespace Hawk {
 
 	void Application::Run() {
 
+		m_LayerStack.setupEvents(m_EventDispatcher);
 
 		while (m_Running) {
 
@@ -23,7 +29,15 @@ namespace Hawk {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 
+			for (Layer* layer : m_LayerStack) {
+				layer->OnUpdate();
+			}
+
 			m_Window->OnUpdate();
+
+
+
+
 
 		}
 	}
@@ -48,6 +62,16 @@ namespace Hawk {
 		m_EventDispatcher.Subscribe<MouseButtonReleasedEvent>(BIND_EVENT_FN_DEFAULT(Application::onMouseButtonReleased));
 
 
+	}
+
+	void Application::PushLayer(Layer* layer) {
+		m_LayerStack.pushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* layer) {
+		m_LayerStack.pushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClosedEvent(WindowCloseEvent& event) {
