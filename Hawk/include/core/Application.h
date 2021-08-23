@@ -3,6 +3,7 @@
 #include "hawk_exports.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
+#include "Window.h"
 
 namespace Hawk {
 
@@ -15,6 +16,7 @@ namespace Hawk {
 		virtual ~Application() = default;
 
 		void Run();
+		inline Window& GetWindow() { return *m_Window; };
 		inline static  Application& GetInstance() { return *s_Instance; }
 
 
@@ -28,6 +30,7 @@ namespace Hawk {
 		bool onMouseButtonReleased(MouseButtonReleasedEvent&);
 
 		EventDispatcher m_EventDispatcher;
+		std::unique_ptr<Window> m_Window;
 
 		bool m_Running = true;
 
