@@ -1,6 +1,8 @@
 #include "core/log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+
+
 namespace Hawk {
 
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
