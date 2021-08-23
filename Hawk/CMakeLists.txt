@@ -39,7 +39,11 @@ FetchContent_Declare(glfw
 
 FetchContent_MakeAvailable(spdlog glfw)
 
+find_package(OpenGL REQUIRED)
+
+#glad 
+add_subdirectory(Packages/glad)
 
 
 
-target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw)
+target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad)

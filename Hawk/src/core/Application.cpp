@@ -2,6 +2,7 @@
 #include "core/Core.h"
 
 #include "core/Platforms/AnyPlatformWindow.h"
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Hawk {

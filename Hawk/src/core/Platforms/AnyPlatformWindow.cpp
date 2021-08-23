@@ -2,6 +2,7 @@
 #include "core/Events/ApplicationEvent.h"
 #include "core/Events/KeyEvent.h"
 #include "core/Events/MouseEvent.h"
+#include "glad/glad.h"
 
 #include "GLFW/glfw3.h"
 
@@ -59,6 +60,10 @@ namespace Hawk {
 
 
 		glfwMakeContextCurrent(m_Window);
+
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		HK_CORE_ASSERT(status, "Could not initiliaze Glad!");
+
 
 		SetVSync(true);
 
