@@ -1,7 +1,7 @@
 #pragma once
 
 #include "hawk_exports.h"
-#include "core/Events/Event.h"
+#include "Events/Event.h"
 
 namespace Hawk {
 

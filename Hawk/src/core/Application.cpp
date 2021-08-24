@@ -1,13 +1,13 @@
 
-#include "core/Application.h"
-#include "core/Core.h"
+#include "Core/Application.h"
+#include "Core/Core.h"
 
-#include "core/Platforms/AnyPlatformWindow.h"
+#include "Platforms/Windows/WindowsWindow.h"
 
 
 #include "glad/glad.h"
 
-#include  "core/ImGui/ImGuiLayer.h"
+#include  "ImGui/ImGuiLayer.h"
 #include "GLFW/glfw3.h"
 
 namespace Hawk {

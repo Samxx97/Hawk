@@ -1,10 +1,11 @@
 #pragma once
 
 #include "hawk_exports.h"
+
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Window.h"
-#include "LayerStack.h"
+#include "Layers/LayerStack.h"
 
 namespace Hawk {
 

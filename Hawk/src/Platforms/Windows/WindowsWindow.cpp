@@ -1,7 +1,7 @@
-#include "core/Platforms/AnyPlatformWindow.h"
-#include "core/Events/ApplicationEvent.h"
-#include "core/Events/KeyEvent.h"
-#include "core/Events/MouseEvent.h"
+#include "Platforms/Windows/WindowsWindow.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 #include "glad/glad.h"
 
 #include "GLFW/glfw3.h"
@@ -10,11 +10,11 @@ namespace Hawk {
 
 
 	template<class T>
-	bool AnyPlatformWindow<T>::s_Glfw_initiliazed = false;
+	bool WindowsWindow<T>::s_Glfw_initiliazed = false;
 
 
 	template<class T>
-	AnyPlatformWindow<T>::AnyPlatformWindow(T& eventHandler, const WindowProps& props) : m_Data(eventHandler) {
+	WindowsWindow<T>::WindowsWindow(T& eventHandler, const WindowProps& props) : m_Data(eventHandler) {
 
 		Init(props);
 
@@ -22,13 +22,13 @@ namespace Hawk {
 
 
 	template<class T>
-	AnyPlatformWindow<T>::~AnyPlatformWindow() {
+	WindowsWindow<T>::~WindowsWindow() {
 
 		glfwDestroyWindow(m_Window);
 	}
 
 	template<class T>
-	void AnyPlatformWindow<T>::Init(const WindowProps& props) {
+	void WindowsWindow<T>::Init(const WindowProps& props) {
 
 		glfwSetErrorCallback([](int error, const char* description) {HK_CORE_ERROR("GLFW_Error ({0}): {1}", error, description); });
 
@@ -183,21 +183,21 @@ namespace Hawk {
 	}
 
 	template <class T>
-	void AnyPlatformWindow<T>::OnUpdate() {
+	void WindowsWindow<T>::OnUpdate() {
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
 	template <class T>
-	void AnyPlatformWindow<T>::SetVSync(bool enabled) {
+	void WindowsWindow<T>::SetVSync(bool enabled) {
 
 		enabled ? glfwSwapInterval(1) : glfwSwapInterval(0);
 		m_Data.IsVSync = enabled;
 	}
 
 	//instantiating the template to provide member function implementations to silence linker errors
-	template class AnyPlatformWindow<EventDispatcher>;
+	template class WindowsWindow<EventDispatcher>;
 
 
 }

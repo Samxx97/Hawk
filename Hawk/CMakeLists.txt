@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp" "src/core/LayerStack.cpp" "src/core/ImGui/ImGuiLayer.cpp" "src/core/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp")
+﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp" "src/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 
@@ -8,7 +8,7 @@ target_include_directories(Hawk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 target_compile_definitions(Hawk PRIVATE HAWK_BUILD_DLL HK_ENABLE_ASSERTS)
 
 target_precompile_headers(Hawk PRIVATE
-							   include/hkpch.h)
+							   include/Core/hkpch.h)
 
 include(GenerateExportHeader)
 

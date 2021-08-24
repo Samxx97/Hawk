@@ -1,4 +1,4 @@
-#include "core/Window.h"
+#include "Core/Window.h"
 
 struct GLFWwindow;
 
@@ -6,14 +6,14 @@ namespace Hawk {
 
 
 	template<class T>
-	class HAWK_API AnyPlatformWindow : public Window {
+	class HAWK_API WindowsWindow : public Window {
 
 	public:
 
-		//AnyPlatformWindow(const WindowProps&);
-		AnyPlatformWindow(T& eventHandler, const WindowProps& props);
+		//WindowsWindow(const WindowProps&);
+		WindowsWindow(T& eventHandler, const WindowProps& props);
 
-		~AnyPlatformWindow();
+		~WindowsWindow();
 
 		void OnUpdate() override;
 
@@ -53,7 +53,7 @@ namespace Hawk {
 
 	template<typename T>
 	static Window* Window::Create(T& eventHandler, const WindowProps& props) {
-		return new AnyPlatformWindow<T>(eventHandler, props);
+		return new WindowsWindow<T>(eventHandler, props);
 	}
 
 

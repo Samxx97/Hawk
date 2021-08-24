@@ -85,7 +85,7 @@
 #endif
 
 #include "imgui.h"
-#include "core/Platforms/Opengl/ImGuiOpenGLRenderer.h"
+#include "Platforms/Opengl/ImGuiOpenGLRenderer.h"
 #include "glad/glad.h"
 
 #include <stdio.h>

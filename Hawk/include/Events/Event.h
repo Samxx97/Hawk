@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/Core.h"
-#include "core/log.h"
+#include "Core/Core.h"
+#include "Core/log.h"
 
 namespace Hawk {
 

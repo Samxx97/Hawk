@@ -1,7 +1,7 @@
-#include "core/Layer.h"
-#include "core/Events/KeyEvent.h"
-#include "core/Events/MouseEvent.h"
-#include "core/Events/ApplicationEvent.h"
+#include "Layers/Layer.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Hawk {
 

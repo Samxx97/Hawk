@@ -1,9 +1,9 @@
-#include "core/ImGui/ImGuiLayer.h"
+#include "ImGui/ImGuiLayer.h"
 
 #include "imgui.h"
-#include "core/Platforms/Opengl/ImGuiOpenGLRenderer.h"
+#include "Platforms/Opengl/ImGuiOpenGLRenderer.h"
 #include "GLFW/glfw3.h"
-#include "core/Application.h"
+#include "Core/Application.h"
 
 
 
