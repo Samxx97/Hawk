@@ -36,9 +36,11 @@ namespace Hawk {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		//to be defined by Implementing Windows
+		//to be defined by the Implementations
 		template <typename T>
 		static Window* Create(T& eventHandler, const WindowProps& props = WindowProps());
+
+
 	};
 
 

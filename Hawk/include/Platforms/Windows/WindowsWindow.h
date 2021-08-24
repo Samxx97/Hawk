@@ -51,10 +51,6 @@ namespace Hawk {
 
 	};
 
-	template<typename T>
-	static Window* Window::Create(T& eventHandler, const WindowProps& props) {
-		return new WindowsWindow<T>(eventHandler, props);
-	}
 
 
 }

@@ -196,7 +196,15 @@ namespace Hawk {
 		m_Data.IsVSync = enabled;
 	}
 
-	//instantiating the template to provide member function implementations to silence linker errors
+
+	//instantiating the templates with EventDispatcher  to provide member function implementations to silence linker errors
+
+
+	template<>
+	static Window* Window::Create(EventDispatcher& eventHandler, const WindowProps& props) {
+		return new WindowsWindow<EventDispatcher>(eventHandler, props);
+	}
+
 	template class WindowsWindow<EventDispatcher>;
 
 
