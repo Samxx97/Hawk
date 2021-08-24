@@ -25,7 +25,6 @@ class Sandbox : public Hawk::Application {
 public:
 
 	Sandbox() {
-
 		PushLayer(new ExampleLayer2());
 		PushLayer(new Hawk::ImGuiLayer());
 
