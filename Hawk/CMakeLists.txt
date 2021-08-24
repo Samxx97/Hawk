@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp" "src/core/LayerStack.cpp")
+﻿set(SOURCE_FILES "src/core/Application.cpp" "src/core/log.cpp" "src/core/Platforms/AnyPlatformWindow.cpp" "src/core/LayerStack.cpp" "src/core/ImGui/ImGuiLayer.cpp" "src/core/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 
@@ -44,6 +44,8 @@ find_package(OpenGL REQUIRED)
 #glad 
 add_subdirectory(Packages/glad)
 
+#ImGui
+add_subdirectory(Packages/imgui)
 
 
-target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad)
+target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad imgui)

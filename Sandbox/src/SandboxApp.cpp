@@ -27,6 +27,7 @@ public:
 	Sandbox() {
 
 		PushLayer(new ExampleLayer2());
+		PushLayer(new Hawk::ImGuiLayer());
 
 	}
 	~Sandbox() = default;
@@ -37,6 +38,5 @@ public:
 Hawk::Application* Hawk::CreateApplication() {
 
 	return new Sandbox();
-
 
 }
