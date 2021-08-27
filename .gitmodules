@@ -1,0 +1,4 @@
+[submodule "Hawk/Packages/imgui"]
+	path = Hawk/Packages/imgui
+	url = https://github.com/ocornut/imgui.git
+	ignore = dirty
