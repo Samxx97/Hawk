@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp" "src/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp")
+﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp" "src/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp" "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 
@@ -41,11 +41,6 @@ FetchContent_MakeAvailable(spdlog glfw)
 
 find_package(OpenGL REQUIRED)
 
-#glad 
-add_subdirectory(Packages/glad)
-
-#ImGui
-add_subdirectory(Packages/imgui)
-
+add_subdirectory(Packages)
 
 target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad imgui)
