@@ -7,6 +7,7 @@
 #include "Layers/Layer.h"
 
 #include "ImGui/ImGuiLayer.h"
+#include "Input/Input.h"
 
 //provides an entry point 
 #include "core/EntryPoint.h"

@@ -42,12 +42,11 @@ namespace Hawk {
 		bool onMouseButtonReleased(MouseButtonReleasedEvent&);
 
 		EventDispatcher m_EventDispatcher;
-		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
+		std::unique_ptr<Window> m_Window;
 
 		bool m_Running = true;
-
 		static Application* s_Instance;
 
 	};

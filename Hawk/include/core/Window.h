@@ -2,6 +2,7 @@
 
 #include "hawk_exports.h"
 #include "Events/Event.h"
+#include "Input/Input.h"
 
 namespace Hawk {
 
@@ -37,6 +38,8 @@ namespace Hawk {
 		virtual bool IsVSync() const = 0;
 
 		virtual void* GetNativeWindow() const = 0;
+		//returns a pointer to the windows input
+		virtual Input* GetInput() = 0;
 
 		//to be defined by the Implementations
 		template <typename T>

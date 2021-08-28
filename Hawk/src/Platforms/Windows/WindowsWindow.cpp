@@ -1,10 +1,13 @@
 #include "Platforms/Windows/WindowsWindow.h"
+#include "Platforms/Windows/WindowsInput.h"
+
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
-#include "glad/glad.h"
 
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
+
 
 namespace Hawk {
 
@@ -54,19 +57,16 @@ namespace Hawk {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, props.Title.c_str(), nullptr, nullptr);
-
 		HK_CORE_ASSERT(m_Window, "Could not initiliaze GLFW!");
-
-
 
 		glfwMakeContextCurrent(m_Window);
 
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HK_CORE_ASSERT(status, "Could not initiliaze Glad!");
 
+		m_Input = std::make_unique<WindowsInput>(m_Window);
 
 		SetVSync(true);
-
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		//set up event callbacks
@@ -198,7 +198,6 @@ namespace Hawk {
 
 
 	//instantiating the templates with EventDispatcher  to provide member function implementations to silence linker errors
-
 
 	template<>
 	static Window* Window::Create(EventDispatcher& eventHandler, const WindowProps& props) {

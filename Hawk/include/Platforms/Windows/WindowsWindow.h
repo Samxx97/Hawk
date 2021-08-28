@@ -25,10 +25,14 @@ namespace Hawk {
 		bool IsVSync() const override { return m_Data.IsVSync; }
 
 		inline void* GetNativeWindow() const override { return m_Window; }
+		inline Input* GetInput() override { return m_Input.get(); };
+
 
 	private:
 
 		static bool s_Glfw_initiliazed;
+
+		std::unique_ptr<Input> m_Input;
 		GLFWwindow* m_Window;
 
 

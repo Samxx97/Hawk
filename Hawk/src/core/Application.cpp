@@ -6,6 +6,7 @@
 
 #include "ImGui/ImGuiLayer.h"
 
+
 namespace Hawk {
 
 	Application* Application::s_Instance = nullptr;
@@ -52,6 +53,7 @@ namespace Hawk {
 		HK_CORE_TRACE("Initializing Application");
 
 		m_Window = std::unique_ptr<Window>(Window::Create(m_EventDispatcher));
+		Input::setInput(m_Window->GetInput());
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushLayer(m_ImGuiLayer);
@@ -95,7 +97,9 @@ namespace Hawk {
 
 	bool Application::onMouseMoveEvent(MouseMovedEvent& event) {
 
+
 		HK_CORE_TRACE("EVENT_OCCURED:{}", event.toString());
+
 
 		return true;
 
