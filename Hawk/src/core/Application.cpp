@@ -1,13 +1,10 @@
-
 #include "Core/Application.h"
 #include "Core/Core.h"
 
-
-
 #include "glad/glad.h"
-
-#include  "ImGui/ImGuiLayer.h"
 #include "GLFW/glfw3.h"
+
+#include "ImGui/ImGuiLayer.h"
 
 namespace Hawk {
 
@@ -32,11 +29,15 @@ namespace Hawk {
 				layer->OnUpdate();
 			}
 
+			m_ImGuiLayer->Begin();
+
+			for (Layer* layer : m_LayerStack) {
+				layer->OnImGuiRender(m_ImGuiLayer->m_context);
+			}
+
+			m_ImGuiLayer->End();
+
 			m_Window->OnUpdate();
-
-
-
-
 
 		}
 	}
@@ -51,6 +52,9 @@ namespace Hawk {
 		HK_CORE_TRACE("Initializing Application");
 
 		m_Window = std::unique_ptr<Window>(Window::Create(m_EventDispatcher));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushLayer(m_ImGuiLayer);
 
 
 		//Register Application EventHandlers

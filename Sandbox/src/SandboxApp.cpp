@@ -1,10 +1,17 @@
 #include "Hawk.h"
 
+#include "imgui.h"
 
 class ExampleLayer2 : public Hawk::Layer {
 
 public:
 	ExampleLayer2() :Layer("example1") {};
+
+	void OnImGuiRender(ImGuiContext* context) override {
+
+		ImGui::SetCurrentContext(context);
+		ImGui::Text("HelloWorld");
+	};
 
 	void setupEvents(Hawk::EventDispatcher& dispatcher) override {
 
@@ -26,7 +33,6 @@ public:
 
 	Sandbox() {
 		PushLayer(new ExampleLayer2());
-		PushLayer(new Hawk::ImGuiLayer());
 
 	}
 	~Sandbox() = default;

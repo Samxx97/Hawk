@@ -2,6 +2,8 @@
 
 #include "Events/Event.h"
 
+struct ImGuiContext;
+
 namespace Hawk {
 
 
@@ -15,8 +17,10 @@ namespace Hawk {
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
 		virtual void OnUpdate() {};
+		virtual void OnImGuiRender(ImGuiContext* context) {};
 
 		virtual void setupEvents(EventDispatcher& dispatcher) = 0;
+
 		void disableEvents() {
 
 			if (m_EventData)

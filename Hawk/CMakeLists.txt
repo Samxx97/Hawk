@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp" "src/Platforms/OpenGl/ImGuiOpenGLRenderer.cpp" "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp")
+﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp")
 
 add_library (Hawk SHARED ${SOURCE_FILES})
 

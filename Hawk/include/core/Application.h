@@ -8,8 +8,10 @@
 #include "Window.h"
 #include "Layers/LayerStack.h"
 
+
 namespace Hawk {
 
+	class ImGuiLayer;
 
 	class HAWK_API Application {
 
@@ -30,7 +32,6 @@ namespace Hawk {
 	protected:
 
 
-
 	private:
 
 		void Init();
@@ -43,7 +44,7 @@ namespace Hawk {
 		EventDispatcher m_EventDispatcher;
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
-
+		ImGuiLayer* m_ImGuiLayer;
 
 		bool m_Running = true;
 

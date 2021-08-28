@@ -24,7 +24,7 @@ namespace Hawk {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override { return m_Data.IsVSync; }
 
-
+		inline void* GetNativeWindow() const override { return m_Window; }
 
 	private:
 
