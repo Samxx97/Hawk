@@ -1,5 +1,6 @@
 ﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp")
 
+#TODO transform the Engine from shared to Static 
 add_library (Hawk SHARED ${SOURCE_FILES})
 
 target_include_directories(Hawk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include  

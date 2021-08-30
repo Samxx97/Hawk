@@ -3,6 +3,7 @@
 
 namespace Hawk {
 
+	//TODO turn this into proper singleton class 
 	class HAWK_API Input {
 
 	public:
