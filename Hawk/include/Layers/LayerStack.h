@@ -17,7 +17,7 @@ namespace Hawk {
 		void popLayer(Layer* layer);
 		void popOverlay(Layer* overlay);
 
-		void setupEvents(EventDispatcher& dispatcher);
+		void SetupEvents(EventDispatcher& dispatcher);
 
 		LayerIterator begin() { return m_Layers.begin(); };
 		LayerIterator end() { return m_Layers.end(); };

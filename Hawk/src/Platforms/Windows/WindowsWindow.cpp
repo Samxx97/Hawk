@@ -1,11 +1,11 @@
 #include "Platforms/Windows/WindowsWindow.h"
 #include "Platforms/Windows/WindowsInput.h"
+#include "Platforms/Windows/Graphics.h"
 
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
 
-#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 
@@ -50,8 +50,6 @@ namespace Hawk {
 
 		}
 
-
-
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -59,18 +57,15 @@ namespace Hawk {
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, props.Title.c_str(), nullptr, nullptr);
 		HK_CORE_ASSERT(m_Window, "Could not initiliaze GLFW!");
 
-		glfwMakeContextCurrent(m_Window);
-
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		HK_CORE_ASSERT(status, "Could not initiliaze Glad!");
-
 		m_Input = std::make_unique<WindowsInput>(m_Window);
+
+		m_Context = std::unique_ptr<GraphicsContext>(GraphicsContext::CreateContext(m_Window));
+		m_Context->Init();
 
 		SetVSync(true);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		//set up event callbacks
-
 		//Window Events
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 
@@ -186,7 +181,7 @@ namespace Hawk {
 	void WindowsWindow<T>::OnUpdate() {
 
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	template <class T>

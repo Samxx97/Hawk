@@ -2,23 +2,23 @@
 #include "Core/Core.h"
 
 #include "glad/glad.h"
-#include "GLFW/glfw3.h"
 
 #include "ImGui/ImGuiLayer.h"
-
 
 namespace Hawk {
 
 	Application* Application::s_Instance = nullptr;
 
 
-	Application::Application() {
+	Application::Application()
+	{
 		Init();
 	}
 
-	void Application::Run() {
+	void Application::Run()
+	{
 
-		m_LayerStack.setupEvents(m_EventDispatcher);
+		m_LayerStack.SetupEvents(m_EventDispatcher);
 
 		while (m_Running) {
 
@@ -35,7 +35,6 @@ namespace Hawk {
 			for (Layer* layer : m_LayerStack) {
 				layer->OnImGuiRender(m_ImGuiLayer->m_context);
 			}
-
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
@@ -61,10 +60,6 @@ namespace Hawk {
 
 		//Register Application EventHandlers
 		m_EventDispatcher.Subscribe<WindowCloseEvent>(BIND_EVENT_FN_DEFAULT(Application::OnWindowClosedEvent));
-		m_EventDispatcher.Subscribe<WindowResizeEvent>(BIND_EVENT_FN_DEFAULT(Application::OnWindowResizeEvent));
-		m_EventDispatcher.Subscribe<MouseMovedEvent>(BIND_EVENT_FN_DEFAULT(Application::onMouseMoveEvent));
-		m_EventDispatcher.Subscribe<MouseButtonPressedEvent>(BIND_EVENT_FN_DEFAULT(Application::onMouseButtonPressed));
-		m_EventDispatcher.Subscribe<MouseButtonReleasedEvent>(BIND_EVENT_FN_DEFAULT(Application::onMouseButtonReleased));
 
 
 	}
@@ -87,39 +82,5 @@ namespace Hawk {
 		return true;
 	}
 
-	bool Application::OnWindowResizeEvent(WindowResizeEvent& event) {
-
-		HK_CORE_TRACE("EVENT_OCCURED:{}", event.toString());
-
-		return true;
-
-	}
-
-	bool Application::onMouseMoveEvent(MouseMovedEvent& event) {
-
-
-		HK_CORE_TRACE("EVENT_OCCURED:{}", event.toString());
-
-
-		return true;
-
-	}
-	bool Application::onMouseButtonPressed(MouseButtonPressedEvent& event) {
-
-		HK_CORE_TRACE("EVENT_OCCURED:{}", event.toString());
-
-
-
-
-		return true;
-
-	}
-	bool Application::onMouseButtonReleased(MouseButtonReleasedEvent& event) {
-
-		HK_CORE_TRACE("EVENT_OCCURED:{}", event.toString());
-
-		return true;
-
-	}
 
 }

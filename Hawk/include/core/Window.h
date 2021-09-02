@@ -1,6 +1,5 @@
 #pragma once
 
-#include "hawk_exports.h"
 #include "Events/Event.h"
 #include "Input/Input.h"
 

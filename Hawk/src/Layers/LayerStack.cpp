@@ -49,7 +49,7 @@ namespace Hawk {
 
 	}
 
-	void LayerStack::setupEvents(EventDispatcher& dispatcher) {
+	void LayerStack::SetupEvents(EventDispatcher& dispatcher) {
 
 		for (auto it = m_Layers.rbegin(); it != m_Layers.rend(); ++it) {
 			(*it)->setupEvents(dispatcher);

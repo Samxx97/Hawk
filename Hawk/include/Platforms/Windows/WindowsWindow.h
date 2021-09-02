@@ -1,4 +1,5 @@
 #include "Core/Window.h"
+#include "Rendering/GraphicsContext.h"
 
 struct GLFWwindow;
 
@@ -32,8 +33,9 @@ namespace Hawk {
 
 		static bool s_Glfw_initiliazed;
 
-		std::unique_ptr<Input> m_Input;
 		GLFWwindow* m_Window;
+		std::unique_ptr<Input> m_Input;
+		std::unique_ptr<GraphicsContext> m_Context;
 
 
 		struct WindowData {

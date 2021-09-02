@@ -2,8 +2,6 @@
 
 int main(int argc, char** argv) {
 
-
-
 	auto app = Hawk::CreateApplication();
 	app->Run();
 

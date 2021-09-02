@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Event.h"
-
 
 namespace Hawk {
 
@@ -86,7 +84,6 @@ namespace Hawk {
 		}
 
 		EVENT_TYPE(KeyTyped);
-
 
 	};
 

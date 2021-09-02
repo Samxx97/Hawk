@@ -1,9 +1,10 @@
 #pragma once
 
-
 namespace Hawk {
 
 	//TODO turn this into proper singleton class 
+	//TODO Add Native Keycodes Mappings Specific to This Engine
+	//TODO add the rest of query Methods
 	class HAWK_API Input {
 
 	public:
@@ -25,5 +26,3 @@ namespace Hawk {
 
 
 }
-
-
