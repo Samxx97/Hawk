@@ -1,6 +1,8 @@
 
 namespace Hawk {
 
+	using m_RenderId = uint32_t;
+
 	class RenderAPI {
 
 	public:
@@ -14,6 +16,8 @@ namespace Hawk {
 		static API GraphicsAPI;
 
 	};
+
+
 
 
 }

@@ -19,6 +19,11 @@ namespace Hawk {
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HK_CORE_ASSERT(status, "Could not initiliaze Glad!");
 
+
+		HK_CORE_INFO("OpenGL Info:");
+		HK_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+		HK_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+		HK_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers() {

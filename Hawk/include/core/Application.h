@@ -8,6 +8,7 @@
 namespace Hawk {
 
 	class ImGuiLayer;
+	class VertexArray;
 
 	class HAWK_API Application {
 
@@ -28,6 +29,8 @@ namespace Hawk {
 
 		void Init();
 		bool OnWindowClosedEvent(WindowCloseEvent&);
+
+		VertexArray* m_Vao;
 
 		EventDispatcher m_EventDispatcher;
 		LayerStack m_LayerStack;

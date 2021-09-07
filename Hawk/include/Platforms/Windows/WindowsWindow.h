@@ -1,5 +1,5 @@
 #include "Core/Window.h"
-#include "Rendering/GraphicsContext.h"
+#include "Renderer/GraphicsContext.h"
 
 struct GLFWwindow;
 

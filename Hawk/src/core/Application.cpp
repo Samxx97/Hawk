@@ -1,5 +1,7 @@
 #include "Core/Application.h"
 #include "Core/Core.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 #include "glad/glad.h"
 
@@ -22,8 +24,13 @@ namespace Hawk {
 
 		while (m_Running) {
 
-			glClearColor(01.0, 0.2, 0.6, 1);
+
+			glClearColor(0.1, 0.1, 0.1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+
+			m_Vao->Bind();
+			glDrawElements(GL_TRIANGLES, m_Vao->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 
 			for (Layer* layer : m_LayerStack) {
@@ -38,6 +45,8 @@ namespace Hawk {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
+
+
 
 		}
 	}
@@ -61,6 +70,27 @@ namespace Hawk {
 		//Register Application EventHandlers
 		m_EventDispatcher.Subscribe<WindowCloseEvent>(BIND_EVENT_FN_DEFAULT(Application::OnWindowClosedEvent));
 
+
+		float data[] = {
+	   -0.5f,-0.5f,0.0f,
+		0.5f,-0.5f,0.0f,
+		 0.0f,0.5f,0.0f
+		};
+
+		unsigned int indices[3] = { 0, 1, 2 };
+
+		std::shared_ptr<VertexBuffer> Vbuff(VertexBuffer::Create(data, sizeof(data)));
+		Vbuff->SpecifyLayout({
+			{ ShaderDataType::Float3, "Position" }
+
+			});
+
+		std::shared_ptr<IndexBuffer> Ibuff(IndexBuffer::Create(indices, sizeof(indices)));
+
+
+		m_Vao = VertexArray::Create();
+		m_Vao->AttachVertexBuffer(Vbuff);
+		m_Vao->AttachIndexBuffer(Ibuff);
 
 	}
 

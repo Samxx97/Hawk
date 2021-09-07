@@ -14,6 +14,7 @@
 #include <array>
 #include <unordered_map>
 #include <unordered_set>
+#include <initializer_list>
 
 
 #ifdef HAWK_PLATFORM_WINDOWS 

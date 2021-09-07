@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp" "src/Rendering/RenderAPI.cpp" "src/Platforms/Windows/Graphics.cpp")
+﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp" "src/Renderer/RenderAPI.cpp" "src/Platforms/Windows/Graphics.cpp" "src/Renderer/OpenGl/OpenGLBuffer.cpp" "src/Renderer/OpenGl/OpenGLVertexArray.cpp" "src/Renderer/Buffer.cpp" "src/Renderer/VertexArray.cpp")
 
 #TODO transform the Engine from shared to Static 
 add_library (Hawk SHARED ${SOURCE_FILES})
