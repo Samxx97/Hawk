@@ -4,6 +4,8 @@
 
 #include "Window.h"
 #include "Layers/LayerStack.h"
+#include "Renderer/Shader.h"
+
 
 namespace Hawk {
 
@@ -31,6 +33,7 @@ namespace Hawk {
 		bool OnWindowClosedEvent(WindowCloseEvent&);
 
 		VertexArray* m_Vao;
+		std::unique_ptr<Shader> m_shader;
 
 		EventDispatcher m_EventDispatcher;
 		LayerStack m_LayerStack;

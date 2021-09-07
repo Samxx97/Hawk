@@ -29,6 +29,7 @@ namespace Hawk {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 
+			m_shader->Bind();
 			m_Vao->Bind();
 			glDrawElements(GL_TRIANGLES, m_Vao->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
@@ -45,9 +46,6 @@ namespace Hawk {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-
-
-
 		}
 	}
 
@@ -79,9 +77,37 @@ namespace Hawk {
 
 		unsigned int indices[3] = { 0, 1, 2 };
 
+		const std::string VertexShadersrc = R"(
+				#version 330 core
+				
+				layout(location = 0) in vec3 a_Position;
+				out vec3 v_Position;
+
+				void main()
+				{
+					v_Position = a_Position;
+					gl_Position = vec4(a_Position, 1.0);
+				}
+			
+			)";
+
+		const std::string FrgmentShadersrc = R"(
+				#version 330 core 
+				in vec3 v_Position;
+
+				void main()
+				{
+					gl_FragColor = vec4(v_Position*0.5 + 0.5,1.0);
+					
+				}
+
+		)";
+
+		m_shader = std::unique_ptr<Shader>(new Shader(VertexShadersrc, FrgmentShadersrc));
+
 		std::shared_ptr<VertexBuffer> Vbuff(VertexBuffer::Create(data, sizeof(data)));
 		Vbuff->SpecifyLayout({
-			{ ShaderDataType::Float3, "Position" }
+			{ ShaderDataType::Float3, "a_Position" }
 
 			});
 
