@@ -5,7 +5,7 @@ namespace Hawk {
 	class RenderAPI;
 	class VertexArray;
 
-	class RenderCommand
+	class HAWK_API RenderCommand
 	{
 	public:
 

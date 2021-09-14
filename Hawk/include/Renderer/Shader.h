@@ -2,7 +2,7 @@
 
 namespace Hawk {
 
-	class Shader
+	class HAWK_API Shader
 	{
 	public:
 		Shader(const std::string& vertexSrc, const std::string& fragmentSrc);

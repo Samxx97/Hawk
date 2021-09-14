@@ -2,7 +2,7 @@
 
 namespace Hawk {
 
-	class OrthographicCamera {
+	class HAWK_API OrthographicCamera {
 
 	public:
 		OrthographicCamera(float left, float right, float top, float bottom);

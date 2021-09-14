@@ -45,7 +45,7 @@ namespace Hawk {
 
 		case ShaderDataType::Int: return sizeof(int);
 
-		case ShaderDataType::Bool: return sizeof(byte);
+		case ShaderDataType::Bool: return sizeof(bool);
 
 		}
 
@@ -133,7 +133,7 @@ namespace Hawk {
 
 	};
 
-	class VertexBuffer {
+	class HAWK_API VertexBuffer {
 
 	public:
 		virtual ~VertexBuffer() {};
@@ -148,7 +148,7 @@ namespace Hawk {
 		static VertexBuffer* Create(float* data, uint32_t size);
 	};
 
-	class IndexBuffer {
+	class HAWK_API IndexBuffer {
 
 	public:
 		virtual ~IndexBuffer() {};

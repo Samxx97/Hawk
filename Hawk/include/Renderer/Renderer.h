@@ -7,7 +7,7 @@ namespace Hawk {
 	class Shader;
 	class OrthographicCamera;
 
-	class Renderer {
+	class HAWK_API Renderer {
 
 	public:
 

@@ -4,7 +4,7 @@ namespace Hawk {
 	class VertexBuffer;
 	class IndexBuffer;
 
-	class VertexArray {
+	class HAWK_API VertexArray {
 	public:
 		virtual ~VertexArray() {};
 
