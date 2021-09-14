@@ -1,6 +1,6 @@
 
 namespace Hawk {
-
+	//forward declare to avoid header cyclic depndencies
 	class VertexBuffer;
 	class IndexBuffer;
 

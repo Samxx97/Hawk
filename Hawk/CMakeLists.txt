@@ -1,4 +1,4 @@
-﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp" "src/Renderer/RenderAPI.cpp" "src/Platforms/Windows/Graphics.cpp" "src/Renderer/OpenGl/OpenGLBuffer.cpp" "src/Renderer/OpenGl/OpenGLVertexArray.cpp" "src/Renderer/Buffer.cpp" "src/Renderer/VertexArray.cpp" "src/Renderer/Shader.cpp")
+﻿set(SOURCE_FILES "src/Core/Application.cpp" "src/Core/log.cpp" "src/Platforms/Windows/WindowsWindow.cpp" "src/Layers/LayerStack.cpp" "src/ImGui/ImGuiLayer.cpp"  "src/Platforms/Windows/WindowsInput.cpp" "src/ImGui/ImGuiBuild.cpp" "src/Renderer/RenderAPI.cpp" "src/Platforms/Windows/Graphics.cpp" "src/Renderer/OpenGl/OpenGLBuffer.cpp" "src/Renderer/OpenGl/OpenGLVertexArray.cpp" "src/Renderer/Buffer.cpp" "src/Renderer/VertexArray.cpp" "src/Renderer/Shader.cpp" "src/Renderer/OpenGl/OpenGLRenderAPI.cpp" "src/Renderer/RenderCommand.cpp" "src/Renderer/Renderer.cpp" "src/Renderer/Camera/OrthographicCamera.cpp")
 
 #TODO transform the Engine from shared to Static 
 add_library (Hawk SHARED ${SOURCE_FILES})
@@ -36,12 +36,15 @@ FetchContent_Declare(glfw
 					GIT_REPOSITORY https://github.com/glfw/glfw.git
 					GIT_TAG 3.3.4)
 
+#GLM 
+FetchContent_Declare(glm
+					GIT_REPOSITORY https://github.com/g-truc/glm.git
+					GIT_TAG 0.9.9.8)
 
-
-FetchContent_MakeAvailable(spdlog glfw)
+FetchContent_MakeAvailable(spdlog glfw glm)
 
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(Packages)
 
-target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad imgui)
+target_link_libraries(Hawk PUBLIC spdlog::spdlog_header_only glfw OpenGL::GL glad imgui glm)

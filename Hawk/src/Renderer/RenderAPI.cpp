@@ -1,7 +1,7 @@
 #include "Renderer/RenderAPI.h"
 
 namespace Hawk {
-	//TODO make choice either dynamically 
+	//TODO make choice dynamically 
 	RenderAPI::API RenderAPI::GraphicsAPI = RenderAPI::API::OpenGL;
 
 }

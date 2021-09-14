@@ -117,6 +117,7 @@ namespace Hawk {
 		}
 
 		inline uint32_t GetStride() const { return m_Stride; }
+		inline size_t GetAttributesCount() const { return m_Attributes.size(); }
 
 		/*Iterator begin() { return m_Attributes.begin(); }
 		Iterator end() { return  m_Attributes.end(); }*/

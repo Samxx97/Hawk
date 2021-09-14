@@ -3,7 +3,8 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 
-#include "glad/glad.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/RenderCommand.h"
 
 #include "ImGui/ImGuiLayer.h"
 
@@ -12,7 +13,7 @@ namespace Hawk {
 	Application* Application::s_Instance = nullptr;
 
 
-	Application::Application()
+	Application::Application() : m_Camera(-1.6f, 1.6f, 0.9f, -0.9f)
 	{
 		Init();
 	}
@@ -24,14 +25,18 @@ namespace Hawk {
 
 		while (m_Running) {
 
+			RenderCommand::SetClearColor(glm::vec4(0.1, 0.1, 0.1, 1));
+			RenderCommand::Clear();
 
-			glClearColor(0.1, 0.1, 0.1, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			m_Camera.SetRotation(45.0f);
+			m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
 
+			Renderer::BeginScene(m_Camera);
 
-			m_shader->Bind();
-			m_Vao->Bind();
-			glDrawElements(GL_TRIANGLES, m_Vao->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VaoS, m_shaderS);
+			Renderer::Submit(m_VaoT, m_shaderT);
+
+			Renderer::EndScene();
 
 
 			for (Layer* layer : m_LayerStack) {
@@ -62,7 +67,7 @@ namespace Hawk {
 		Input::setInput(m_Window->GetInput());
 
 		m_ImGuiLayer = new ImGuiLayer();
-		PushLayer(m_ImGuiLayer);
+		PushOverlay(m_ImGuiLayer);
 
 
 		//Register Application EventHandlers
@@ -78,32 +83,34 @@ namespace Hawk {
 		unsigned int indices[3] = { 0, 1, 2 };
 
 		const std::string VertexShadersrc = R"(
-				#version 330 core
-				
-				layout(location = 0) in vec3 a_Position;
-				out vec3 v_Position;
+						#version 330 core
 
-				void main()
-				{
-					v_Position = a_Position;
-					gl_Position = vec4(a_Position, 1.0);
-				}
-			
-			)";
+						layout(location = 0) in vec3 a_Position;
+						out vec3 v_Position;
+
+						uniform mat4 u_VP;
+
+						void main()
+						{
+							v_Position = a_Position;
+							gl_Position = u_VP * vec4(v_Position, 1.0);
+						}
+
+					)";
 
 		const std::string FrgmentShadersrc = R"(
-				#version 330 core 
-				in vec3 v_Position;
+						#version 330 core
+						in vec3 v_Position;
 
-				void main()
-				{
-					gl_FragColor = vec4(v_Position*0.5 + 0.5,1.0);
-					
-				}
+						void main()
+						{
+							gl_FragColor = vec4(v_Position*0.5 + 0.5,1.0);
 
-		)";
+						}
 
-		m_shader = std::unique_ptr<Shader>(new Shader(VertexShadersrc, FrgmentShadersrc));
+				)";
+
+		m_shaderT = std::shared_ptr<Shader>(new Shader(VertexShadersrc, FrgmentShadersrc));
 
 		std::shared_ptr<VertexBuffer> Vbuff(VertexBuffer::Create(data, sizeof(data)));
 		Vbuff->SpecifyLayout({
@@ -114,9 +121,66 @@ namespace Hawk {
 		std::shared_ptr<IndexBuffer> Ibuff(IndexBuffer::Create(indices, sizeof(indices)));
 
 
-		m_Vao = VertexArray::Create();
-		m_Vao->AttachVertexBuffer(Vbuff);
-		m_Vao->AttachIndexBuffer(Ibuff);
+		m_VaoT = std::shared_ptr<VertexArray>(VertexArray::Create());
+		m_VaoT->AttachVertexBuffer(Vbuff);
+		m_VaoT->AttachIndexBuffer(Ibuff);
+
+
+		float dataS[] = {
+		-0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		0.75f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		0.75f, 0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		-0.25, 0.75 , 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		};
+
+		unsigned int indicesS[6] = { 0, 1, 3, 3, 2, 1 };
+
+
+
+		const std::string VertexShadersrcS = R"(
+				#version 330 core
+
+				layout(location = 0) in vec3 a_Position;
+				layout(location = 1) in vec4 a_Color;
+				out vec4 v_Color;
+
+				uniform mat4 u_VP;
+
+				void main()
+				{
+					v_Color = a_Color;
+					gl_Position = u_VP * vec4(a_Position, 1.0);
+				}
+
+			)";
+
+		const std::string FrgmentShadersrcS = R"(
+				#version 330 core
+				in vec4 v_Color;
+
+				void main()
+				{
+					gl_FragColor = v_Color;
+
+				}
+
+		)";
+
+		m_shaderS = std::shared_ptr<Shader>(new Shader(VertexShadersrcS, FrgmentShadersrcS));
+
+		std::shared_ptr<VertexBuffer> VbuffS(VertexBuffer::Create(dataS, sizeof(dataS)));
+		VbuffS->SpecifyLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color" }
+
+			});
+
+		std::shared_ptr<IndexBuffer> IbuffS(IndexBuffer::Create(indicesS, sizeof(indicesS)));
+
+
+		m_VaoS = std::shared_ptr<VertexArray>(VertexArray::Create());
+		m_VaoS->AttachVertexBuffer(VbuffS);
+		m_VaoS->AttachIndexBuffer(IbuffS);
 
 	}
 

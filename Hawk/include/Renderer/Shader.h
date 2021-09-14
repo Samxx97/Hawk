@@ -1,3 +1,5 @@
+#include "glm/glm.hpp"
+
 namespace Hawk {
 
 	class Shader
@@ -8,6 +10,8 @@ namespace Hawk {
 
 		void Bind();
 		void Unbind();
+
+		void UploadeUniform(const glm::mat4& mat, const std::string& name);
 
 	private:
 		uint32_t m_RenderID;

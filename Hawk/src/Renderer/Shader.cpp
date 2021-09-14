@@ -1,6 +1,7 @@
 #include "Renderer/Shader.h"
 #include "glad/glad.h"
 #include "Core/Core.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace Hawk {
 
@@ -121,6 +122,12 @@ namespace Hawk {
 	void Shader::Unbind()
 	{
 		glUseProgram(0);
+	}
+
+	void Shader::UploadeUniform(const glm::mat4& mat, const std::string& name)
+	{
+		uint32_t location = glGetUniformLocation(m_RenderID, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
 }
