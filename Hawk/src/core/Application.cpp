@@ -20,8 +20,10 @@ namespace Hawk {
 
 		while (m_Running) {
 
+			m_TimeStep.Tick();
+
 			for (Layer* layer : m_LayerStack) {
-				layer->OnUpdate();
+				layer->OnUpdate(m_TimeStep);
 			}
 
 			m_ImGuiLayer->Begin();
@@ -42,6 +44,7 @@ namespace Hawk {
 		s_Instance = this;
 
 		Log::init();
+
 		HK_CORE_TRACE("Initializing Application");
 
 		m_Window = std::unique_ptr<Window>(Window::Create(m_EventDispatcher));

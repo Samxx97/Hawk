@@ -5,7 +5,7 @@
 class ExampleLayer2 : public Hawk::Layer {
 
 public:
-	ExampleLayer2() :Layer("example1"), m_Camera(-2.0f, 2.0f, 2.0f, -2.0f) //m_Camera(-1.6f, 1.6f, 0.9f, -0.9f)
+	ExampleLayer2() :Layer("example1"), m_Camera(-1.6f, 1.6f, 0.9f, -0.9f)
 	{
 
 		float data[] = {
@@ -118,21 +118,36 @@ public:
 
 	};
 
-	void OnUpdate() override
+	void OnUpdate(Hawk::TimeStep ts) override
 	{
+		HK_TRACE("Delta Time:{}s", ts);
+
 		if (Hawk::Input::IsKeyPressed(HK_KEY_A))
-			m_CameraPosition.x -= m_CameraSpeedMovement;
+			m_CameraPosition.x -= m_CameraSpeedMovement * ts;
 
 		else if (Hawk::Input::IsKeyPressed(HK_KEY_D))
-			m_CameraPosition.x += m_CameraSpeedMovement;
+			m_CameraPosition.x += m_CameraSpeedMovement * ts;
 
+		if (Hawk::Input::IsKeyPressed(HK_KEY_S))
+			m_CameraPosition.y -= m_CameraSpeedMovement * ts;
+
+		else if (Hawk::Input::IsKeyPressed(HK_KEY_W))
+			m_CameraPosition.y += m_CameraSpeedMovement * ts;
+
+		if (Hawk::Input::IsKeyPressed(HK_KEY_M))
+			m_CameraRotation -= m_CameraSpeedRotation * ts;
+
+		else if (Hawk::Input::IsKeyPressed(HK_KEY_N))
+			m_CameraRotation += m_CameraSpeedRotation * ts;
+
+
+		m_Camera.SetRotation(m_CameraRotation);
+		m_Camera.SetPosition(m_CameraPosition);
 
 
 		Hawk::RenderCommand::SetClearColor(glm::vec4(0.1, 0.1, 0.1, 1));
 		Hawk::RenderCommand::Clear();
 
-		//m_Camera.SetRotation();
-		m_Camera.SetPosition(m_CameraPosition);
 
 		Hawk::Renderer::BeginScene(m_Camera);
 
@@ -169,8 +184,11 @@ private:
 	Hawk::OrthographicCamera m_Camera;
 
 	glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
-	float m_CameraSpeedMovement = 0.07f;
+	float m_CameraSpeedMovement = 5.0f;
 
+
+	float m_CameraRotation = 0;
+	float m_CameraSpeedRotation = 80.0f;
 
 };
 

@@ -35,6 +35,7 @@ namespace Hawk {
 		ImGuiLayer* m_ImGuiLayer;
 
 		std::unique_ptr<Window> m_Window;
+		TimeStep m_TimeStep;
 
 		bool m_Running = true;
 		static Application* s_Instance;
