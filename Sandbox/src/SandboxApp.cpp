@@ -1,5 +1,5 @@
 #include "Hawk.h"
-
+#include "glm/ext.hpp" 
 #include "imgui.h"
 
 class ExampleLayer2 : public Hawk::Layer {
@@ -23,11 +23,12 @@ public:
 						out vec3 v_Position;
 
 						uniform mat4 u_VP;
+						uniform mat4 u_Transform;
 
 						void main()
 						{
 							v_Position = a_Position;
-							gl_Position = u_VP * vec4(v_Position, 1.0);
+							gl_Position = u_VP * u_Transform * vec4(v_Position, 1.0);
 						}
 
 					)";
@@ -79,11 +80,12 @@ public:
 				out vec4 v_Color;
 
 				uniform mat4 u_VP;
+				uniform mat4 u_Transform;
 
 				void main()
 				{
 					v_Color = a_Color;
-					gl_Position = u_VP * vec4(a_Position, 1.0);
+					gl_Position = u_VP * u_Transform * vec4(a_Position, 1.0);
 				}
 
 			)";
@@ -149,10 +151,21 @@ public:
 		Hawk::RenderCommand::Clear();
 
 
+
 		Hawk::Renderer::BeginScene(m_Camera);
 
-		Hawk::Renderer::Submit(m_VaoS, m_shaderS);
-		Hawk::Renderer::Submit(m_VaoT, m_shaderT);
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.26f * j, 0.26f * i, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.25));
+				Hawk::Renderer::Submit(m_VaoS, m_shaderS, transform);
+
+
+			}
+
+		}
+		//Hawk::Renderer::Submit(m_VaoT, m_shaderT);
 
 		Hawk::Renderer::EndScene();
 
