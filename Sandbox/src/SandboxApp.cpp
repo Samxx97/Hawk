@@ -2,6 +2,8 @@
 #include "glm/ext.hpp" 
 #include "imgui.h"
 
+#include "Renderer/Opengl/OpenGLShader.h"
+
 class ExampleLayer2 : public Hawk::Layer {
 
 public:
@@ -45,7 +47,7 @@ public:
 
 				)";
 
-		m_shaderT = std::shared_ptr<Hawk::Shader>(new Hawk::Shader(VertexShadersrc, FrgmentShadersrc));
+		m_shaderT = std::shared_ptr<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrc, FrgmentShadersrc));
 
 		std::shared_ptr<Hawk::VertexBuffer> Vbuff(Hawk::VertexBuffer::Create(data, sizeof(data)));
 		Vbuff->SpecifyLayout({
@@ -76,15 +78,12 @@ public:
 				#version 330 core
 
 				layout(location = 0) in vec3 a_Position;
-				layout(location = 1) in vec4 a_Color;
-				out vec4 v_Color;
 
 				uniform mat4 u_VP;
 				uniform mat4 u_Transform;
 
 				void main()
 				{
-					v_Color = a_Color;
 					gl_Position = u_VP * u_Transform * vec4(a_Position, 1.0);
 				}
 
@@ -92,17 +91,18 @@ public:
 
 		const std::string FrgmentShadersrcS = R"(
 				#version 330 core
-				in vec4 v_Color;
+
+				uniform vec4 u_Color;
 
 				void main()
 				{
-					gl_FragColor = v_Color;
+					gl_FragColor = u_Color;
 
 				}
 
 		)";
 
-		m_shaderS = std::shared_ptr<Hawk::Shader>(new Hawk::Shader(VertexShadersrcS, FrgmentShadersrcS));
+		m_shaderS = std::shared_ptr<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrcS, FrgmentShadersrcS));
 
 		std::shared_ptr<Hawk::VertexBuffer> VbuffS(Hawk::VertexBuffer::Create(dataS, sizeof(dataS)));
 		VbuffS->SpecifyLayout({
@@ -154,6 +154,10 @@ public:
 
 		Hawk::Renderer::BeginScene(m_Camera);
 
+		std::static_pointer_cast<Hawk::OpenGLShader>(m_shaderS)->Bind();
+		std::static_pointer_cast<Hawk::OpenGLShader>(m_shaderS)->UploadUniformFloat4("u_Color", m_Color);
+
+
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
@@ -174,6 +178,9 @@ public:
 	void OnImGuiRender(ImGuiContext* context) override {
 
 		ImGui::SetCurrentContext(context);
+		ImGui::Begin("Color Picker");
+		ImGui::ColorEdit4("Color", glm::value_ptr(m_Color));
+		ImGui::End();
 
 	};
 
@@ -203,6 +210,7 @@ private:
 	float m_CameraRotation = 0;
 	float m_CameraSpeedRotation = 80.0f;
 
+	glm::vec4 m_Color = { 0.0f, 0.0f, 0.0f, 1.0f };
 };
 
 class Sandbox : public Hawk::Application {

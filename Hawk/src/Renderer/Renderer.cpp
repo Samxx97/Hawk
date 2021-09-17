@@ -2,7 +2,7 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Camera/OrthographicCamera.h"
-#include "Renderer/Shader.h"
+#include "Renderer/Opengl/OpenGLShader.h"
 
 namespace Hawk {
 
@@ -21,8 +21,8 @@ namespace Hawk {
 	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform)
 	{
 		shader->Bind();
-		shader->UploadeUniform(m_Data->ViewProjection, "u_VP");
-		shader->UploadeUniform(transform, "u_Transform");
+		std::static_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_VP", m_Data->ViewProjection);
+		std::static_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

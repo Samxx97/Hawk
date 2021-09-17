@@ -5,16 +5,12 @@ namespace Hawk {
 	class HAWK_API Shader
 	{
 	public:
-		Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
-		~Shader();
+		virtual ~Shader() = default;
 
-		void Bind();
-		void Unbind();
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		void UploadeUniform(const glm::mat4& mat, const std::string& name);
-
-	private:
-		uint32_t m_RenderID;
+		static Shader* Create(const std::string& vertexsrc, const std::string& fragmentsrc);
 	};
 
 }
