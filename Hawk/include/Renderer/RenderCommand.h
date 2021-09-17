@@ -11,7 +11,7 @@ namespace Hawk {
 
 		static void SetClearColor(const glm::vec4& color);
 		static void Clear();
-		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray);
+		static void DrawIndexed(const Hawk::Ref<VertexArray>& vertexArray);
 
 	private:
 		static RenderAPI* s_RenderAPI;

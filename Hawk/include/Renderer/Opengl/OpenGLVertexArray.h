@@ -12,16 +12,16 @@ namespace Hawk {
 		void Bind() override;
 		void UnBind() override;
 
-		void AttachVertexBuffer(const std::shared_ptr<VertexBuffer>& Vbuffer) override;
-		void AttachIndexBuffer(const std::shared_ptr<IndexBuffer>& Ibuffer) override;
+		void AttachVertexBuffer(const Hawk::Ref<VertexBuffer>& Vbuffer) override;
+		void AttachIndexBuffer(const Hawk::Ref<IndexBuffer>& Ibuffer) override;
 
-		inline const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; };
+		inline const Hawk::Ref<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; };
 
 	private:
 
 		uint32_t m_vao;
-		std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::vector<Hawk::Ref<VertexBuffer>> m_VertexBuffers;
+		Hawk::Ref<IndexBuffer> m_IndexBuffer;
 		size_t m_AttributeIndex;
 	};
 

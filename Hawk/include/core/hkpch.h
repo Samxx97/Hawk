@@ -23,3 +23,4 @@
 
 //project headers
 #include "Core/log.h"
+#include "Core/Core.h"

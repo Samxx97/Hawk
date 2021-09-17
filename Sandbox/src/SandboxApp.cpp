@@ -47,18 +47,18 @@ public:
 
 				)";
 
-		m_shaderT = std::shared_ptr<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrc, FrgmentShadersrc));
+		m_shaderT = Hawk::Ref<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrc, FrgmentShadersrc));
 
-		std::shared_ptr<Hawk::VertexBuffer> Vbuff(Hawk::VertexBuffer::Create(data, sizeof(data)));
+		Hawk::Ref<Hawk::VertexBuffer> Vbuff(Hawk::VertexBuffer::Create(data, sizeof(data)));
 		Vbuff->SpecifyLayout({
 			{ Hawk::ShaderDataType::Float3, "a_Position" }
 
 			});
 
-		std::shared_ptr<Hawk::IndexBuffer> Ibuff(Hawk::IndexBuffer::Create(indices, sizeof(indices)));
+		Hawk::Ref<Hawk::IndexBuffer> Ibuff(Hawk::IndexBuffer::Create(indices, sizeof(indices)));
 
 
-		m_VaoT = std::shared_ptr<Hawk::VertexArray>(Hawk::VertexArray::Create());
+		m_VaoT = Hawk::Ref<Hawk::VertexArray>(Hawk::VertexArray::Create());
 		m_VaoT->AttachVertexBuffer(Vbuff);
 		m_VaoT->AttachIndexBuffer(Ibuff);
 
@@ -102,19 +102,19 @@ public:
 
 		)";
 
-		m_shaderS = std::shared_ptr<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrcS, FrgmentShadersrcS));
+		m_shaderS = Hawk::Ref<Hawk::Shader>(Hawk::Shader::Create(VertexShadersrcS, FrgmentShadersrcS));
 
-		std::shared_ptr<Hawk::VertexBuffer> VbuffS(Hawk::VertexBuffer::Create(dataS, sizeof(dataS)));
+		Hawk::Ref<Hawk::VertexBuffer> VbuffS(Hawk::VertexBuffer::Create(dataS, sizeof(dataS)));
 		VbuffS->SpecifyLayout({
 			{ Hawk::ShaderDataType::Float3, "a_Position" },
 			{ Hawk::ShaderDataType::Float4, "a_Color" }
 
 			});
 
-		std::shared_ptr<Hawk::IndexBuffer> IbuffS(Hawk::IndexBuffer::Create(indicesS, sizeof(indicesS)));
+		Hawk::Ref<Hawk::IndexBuffer> IbuffS(Hawk::IndexBuffer::Create(indicesS, sizeof(indicesS)));
 
 
-		m_VaoS = std::shared_ptr<Hawk::VertexArray>(Hawk::VertexArray::Create());
+		m_VaoS = Hawk::Ref<Hawk::VertexArray>(Hawk::VertexArray::Create());
 		m_VaoS->AttachVertexBuffer(VbuffS);
 		m_VaoS->AttachIndexBuffer(IbuffS);
 
@@ -195,11 +195,11 @@ public:
 
 private:
 
-	std::shared_ptr<Hawk::VertexArray> m_VaoT;
-	std::shared_ptr<Hawk::Shader> m_shaderT;
+	Hawk::Ref<Hawk::VertexArray> m_VaoT;
+	Hawk::Ref<Hawk::Shader> m_shaderT;
 
-	std::shared_ptr<Hawk::VertexArray> m_VaoS;
-	std::shared_ptr<Hawk::Shader> m_shaderS;
+	Hawk::Ref<Hawk::VertexArray> m_VaoS;
+	Hawk::Ref<Hawk::Shader> m_shaderS;
 
 	Hawk::OrthographicCamera m_Camera;
 

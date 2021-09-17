@@ -16,7 +16,7 @@ namespace Hawk {
 		s_RenderAPI->Clear();
 	}
 
-	void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+	void RenderCommand::DrawIndexed(const Hawk::Ref<VertexArray>& vertexArray)
 	{
 		s_RenderAPI->DrawIndexed(vertexArray);
 

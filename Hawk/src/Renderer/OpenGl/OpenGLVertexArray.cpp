@@ -23,7 +23,7 @@ namespace Hawk {
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AttachVertexBuffer(const std::shared_ptr<VertexBuffer>& Vbuffer)
+	void OpenGLVertexArray::AttachVertexBuffer(const Hawk::Ref<VertexBuffer>& Vbuffer)
 	{
 		HK_CORE_ASSERT(Vbuffer->GetLayout().GetAttributesCount(), "Buffer has no Layout!");
 
@@ -47,7 +47,7 @@ namespace Hawk {
 
 	}
 
-	void OpenGLVertexArray::AttachIndexBuffer(const std::shared_ptr<IndexBuffer>& Ibuffer)
+	void OpenGLVertexArray::AttachIndexBuffer(const Hawk::Ref<IndexBuffer>& Ibuffer)
 	{
 		glBindVertexArray(m_vao);
 
