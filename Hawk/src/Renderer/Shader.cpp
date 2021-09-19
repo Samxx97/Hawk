@@ -4,11 +4,26 @@
 
 namespace Hawk {
 
-	Shader* Shader::Create(const std::string& vertexsrc, const std::string& fragmentsrc)
+	Ref<Shader> Shader::Create(const std::string& vertexsrc, const std::string& fragmentsrc)
 	{
 		switch (RenderAPI::GraphicsAPI)
 		{
-		case RenderAPI::API::OpenGL: return new OpenGLShader(vertexsrc, fragmentsrc);
+		case RenderAPI::API::OpenGL: return std::make_shared<OpenGLShader>(vertexsrc, fragmentsrc);
+
+		case RenderAPI::API::None: HK_CORE_ASSERT(false, "no behavior is implemented for RenderAPI:None yet"); return nullptr;
+
+		}
+
+		HK_CORE_ASSERT(false, "No Rendering API is Selected!");
+		return nullptr;
+
+	}
+
+	Ref<Shader> Shader::Create(const std::string& path)
+	{
+		switch (RenderAPI::GraphicsAPI)
+		{
+		case RenderAPI::API::OpenGL: return std::make_shared<OpenGLShader>(path);
 
 		case RenderAPI::API::None: HK_CORE_ASSERT(false, "no behavior is implemented for RenderAPI:None yet"); return nullptr;
 

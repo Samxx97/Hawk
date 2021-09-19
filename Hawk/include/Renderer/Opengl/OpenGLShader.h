@@ -1,14 +1,20 @@
 #include "Renderer/Shader.h"
 #include "glm/glm.hpp"
 
+typedef unsigned int GLenum;
+
 namespace Hawk {
 
 	class HAWK_API OpenGLShader : public Shader
 	{
 	public:
 		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& path);
 
 		virtual ~OpenGLShader();
+
+		std::unordered_map <GLenum, std::string> Preprocess(const std::string& file);
+		void Compile(std::unordered_map<GLenum, std::string>& shadermap);
 
 		void Bind() const override;
 		void Unbind() const override;

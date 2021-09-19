@@ -16,6 +16,12 @@ add_library(imgui STATIC "imgui/imconfig.h"
 						 "imgui/imgui_demo.cpp"
 						 "imgui/imgui_tables.cpp")
 
+
 list(APPEND imgui_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 
+
+
 target_include_directories(imgui PUBLIC ${imgui_INCLUDE_DIRS})
+
+#stb_image
+add_subdirectory(stb_img)

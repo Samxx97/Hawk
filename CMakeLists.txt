@@ -1,6 +1,7 @@
 ﻿cmake_minimum_required (VERSION 3.18)
 project ("Hawk" LANGUAGES CXX)
   
+set(CMAKE_CXX_STANDARD 17)
 
 #setting the default visibility
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
