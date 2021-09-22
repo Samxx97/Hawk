@@ -12,7 +12,7 @@ namespace Hawk {
 
 	void Renderer::Init()
 	{
-		//TODO add RenderCommand::Init
+		RenderCommand::Init();
 		Renderer2D::Init();
 	}
 	void Renderer::BeginScene(const OrthographicCamera& camera)

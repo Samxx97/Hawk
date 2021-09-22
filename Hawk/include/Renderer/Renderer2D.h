@@ -3,6 +3,7 @@
 namespace Hawk {
 
 	class OrthographicCamera;
+	class Texture2D;
 
 	class HAWK_API Renderer2D
 	{
@@ -16,6 +17,8 @@ namespace Hawk {
 		// Primitives
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture);
 	};
 
 }
