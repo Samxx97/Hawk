@@ -4,10 +4,13 @@
 
 #include "Renderer/Opengl/OpenGLShader.h"
 
+#include "Core/EntryPoint.h"
+#include "SandBox2D.h"
+
 class ExampleLayer2 : public Hawk::Layer {
 
 public:
-	ExampleLayer2() :Layer("example1"), m_Camera(-1.6f, 1.6f, 0.9f, -0.9f)
+	ExampleLayer2() :Layer("example1"), m_CameraController(1280.0f / 720.0f)
 	{
 
 		float dataS[] = {
@@ -32,10 +35,10 @@ public:
 		m_Vao->AttachVertexBuffer(Vbuff);
 		m_Vao->AttachIndexBuffer(Ibuff);
 
-		m_shader = Hawk::Ref<Hawk::Shader>(Hawk::Shader::Create("D:\\PROJECTS\\Hawk\\Sandbox\\assets\\shaders\\gridshader.glsl"));
-		m_TextureShader = Hawk::Shader::Create("D:\\PROJECTS\\Hawk\\Sandbox\\assets\\shaders\\textureshader.glsl");
-
 		m_Texture = Hawk::Texture2D::Create("D:\\PROJECTS\\Hawk\\Sandbox\\assets\\textures\\fire-flower-flames.png");
+
+		m_ShaderLibrary.Load("D:\\PROJECTS\\Hawk\\Sandbox\\assets\\shaders\\gridshader.glsl", "gridshader");
+		auto m_TextureShader = m_ShaderLibrary.Load("D:\\PROJECTS\\Hawk\\Sandbox\\assets\\shaders\\textureshader.glsl", "textureshader");
 
 		std::static_pointer_cast<Hawk::OpenGLShader>(m_TextureShader)->Bind();
 		std::static_pointer_cast<Hawk::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -44,56 +47,34 @@ public:
 
 	void OnUpdate(Hawk::TimeStep ts) override
 	{
-		HK_TRACE("Delta Time:{}s", ts);
+		//HK_TRACE("Delta Time:{}s", ts);
 
-		if (Hawk::Input::IsKeyPressed(HK_KEY_A))
-			m_CameraPosition.x -= m_CameraSpeedMovement * ts;
-
-		else if (Hawk::Input::IsKeyPressed(HK_KEY_D))
-			m_CameraPosition.x += m_CameraSpeedMovement * ts;
-
-		if (Hawk::Input::IsKeyPressed(HK_KEY_S))
-			m_CameraPosition.y -= m_CameraSpeedMovement * ts;
-
-		else if (Hawk::Input::IsKeyPressed(HK_KEY_W))
-			m_CameraPosition.y += m_CameraSpeedMovement * ts;
-
-		if (Hawk::Input::IsKeyPressed(HK_KEY_M))
-			m_CameraRotation -= m_CameraSpeedRotation * ts;
-
-		else if (Hawk::Input::IsKeyPressed(HK_KEY_N))
-			m_CameraRotation += m_CameraSpeedRotation * ts;
-
-
-		m_Camera.SetRotation(m_CameraRotation);
-		m_Camera.SetPosition(m_CameraPosition);
-
+		m_CameraController.OnUpdate(ts);
 
 		Hawk::RenderCommand::SetClearColor(glm::vec4(0.1, 0.1, 0.1, 1));
 		Hawk::RenderCommand::Clear();
 
+		Hawk::Renderer::BeginScene(m_CameraController.GetCamera());
+
+		auto shader = m_ShaderLibrary.Get("gridshader");
+
+		std::static_pointer_cast<Hawk::OpenGLShader>(shader)->Bind();
+		std::static_pointer_cast<Hawk::OpenGLShader>(shader)->UploadUniformFloat4("u_Color", m_Color);
+
+		m_Texture->Bind(0);
+		Hawk::Renderer::Submit(m_Vao, m_ShaderLibrary.Get("textureshader"), glm::mat4(1.0f));
 
 
-		Hawk::Renderer::BeginScene(m_Camera);
-
-		std::static_pointer_cast<Hawk::OpenGLShader>(m_shader)->Bind();
-		std::static_pointer_cast<Hawk::OpenGLShader>(m_shader)->UploadUniformFloat4("u_Color", m_Color);
-
-
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.26f * j, 0.26f * i, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.25));
-				Hawk::Renderer::Submit(m_Vao, m_shader, transform);
-
+				Hawk::Renderer::Submit(m_Vao, shader, transform);
 
 			}
 
 		}
-
-		m_Texture->Bind(0);
-		Hawk::Renderer::Submit(m_Vao, m_TextureShader, glm::mat4(1.0f));
 
 		Hawk::Renderer::EndScene();
 
@@ -110,28 +91,25 @@ public:
 
 	void setupEvents(Hawk::EventDispatcher& dispatcher) override {
 
-		//Subscribe<Hawk::MouseMovedEvent>(dispatcher, BIND_EVENT_FN_DEFAULT(ExampleLayer2::onMouseMoveEvent));
+		Subscribe<Hawk::MouseScrolledEvent>(dispatcher, BIND_EVENT_FN_DEFAULT(ExampleLayer2::OnMouseScroll));
 	}
 
-	bool onMouseMoveEvent(Hawk::MouseMovedEvent& event) {
+	bool OnMouseScroll(Hawk::MouseScrolledEvent& event) {
 
+		m_CameraController.OnMouseScroll(event);
+		return false;
 	}
+
+
 
 private:
 
-
+	Hawk::ShaderLibrary m_ShaderLibrary;
 	Hawk::Ref<Hawk::VertexArray> m_Vao;
-	Hawk::Ref<Hawk::Shader> m_shader, m_TextureShader;
 
-	Hawk::OrthographicCamera m_Camera;
+	Hawk::OrthoGraphicCameraController m_CameraController;
+
 	Hawk::Ref<Hawk::Texture> m_Texture;
-
-	glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
-	float m_CameraSpeedMovement = 5.0f;
-
-	float m_CameraRotation = 0;
-	float m_CameraSpeedRotation = 80.0f;
-
 	glm::vec4 m_Color = { 0.0f, 0.0f, 0.0f, 1.0f };
 };
 
@@ -140,7 +118,8 @@ class Sandbox : public Hawk::Application {
 public:
 
 	Sandbox() {
-		PushLayer(new ExampleLayer2());
+		//PushLayer(new ExampleLayer2());
+		PushLayer(new Sandbox2D());
 
 	}
 	~Sandbox() = default;

@@ -1,4 +1,4 @@
-add_executable(Sandbox "src/SandboxApp.cpp" )
+add_executable(Sandbox "src/SandboxApp.cpp"  "src/SandBox2D.h" "src/SandBox2D.cpp")
 
 target_precompile_headers(Sandbox PRIVATE 
 								<iostream> 

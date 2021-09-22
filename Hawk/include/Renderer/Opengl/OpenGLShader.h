@@ -8,7 +8,7 @@ namespace Hawk {
 	class HAWK_API OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		OpenGLShader(const std::string& path);
 
 		virtual ~OpenGLShader();
@@ -18,6 +18,9 @@ namespace Hawk {
 
 		void Bind() const override;
 		void Unbind() const override;
+		inline const std::string& GetName() const override { return m_Name; };
+		inline void SetName(const std::string& name)  override { m_Name = name; }
+
 
 		void UploadUniformInt(const std::string& name, int value);
 
@@ -31,6 +34,7 @@ namespace Hawk {
 
 	private:
 		uint32_t m_RendererID;
+		std::string m_Name;
 	};
 
 }

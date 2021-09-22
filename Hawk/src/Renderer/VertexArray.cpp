@@ -5,11 +5,11 @@
 
 namespace Hawk {
 
-	VertexArray* VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (RenderAPI::GraphicsAPI)
 		{
-		case RenderAPI::API::OpenGL: return new OpenGLVertexArray();
+		case RenderAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
 
 		case RenderAPI::API::None: HK_CORE_ASSERT(false, "no behavior is implemented for RenderAPI:None yet");
 			return nullptr;

@@ -22,7 +22,8 @@ namespace Hawk {
 		}
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+		: m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> shaderMap{
 			{GL_VERTEX_SHADER, vertexSrc},
@@ -35,12 +36,19 @@ namespace Hawk {
 	OpenGLShader::OpenGLShader(const std::string& path)
 	{
 		std::ifstream file(path);
+
+		HK_CORE_ASSERT(file, "File didnt Open wrong path");
+
 		file.seekg(0, std::ios::end);
 		size_t size = file.tellg();
 
 		std::string buffer(size, ' ');
 		file.seekg(0);
 		file.read(&buffer[0], size);
+		file.close();
+
+		//TODO change it to become the last name in path
+		m_Name = "path";
 
 		std::unordered_map<GLenum, std::string>shaderMap = Preprocess(buffer);
 		Compile(shaderMap);
@@ -88,6 +96,8 @@ namespace Hawk {
 
 	void OpenGLShader::Compile(std::unordered_map<GLenum, std::string>& shadermap)
 	{
+		GLuint program = glCreateProgram();
+
 		std::array<GLuint, 5> shadersIDS;
 		uint32_t idCount = 0;
 
@@ -120,18 +130,11 @@ namespace Hawk {
 				return;
 			}
 
+			glAttachShader(program, shader);
 			shadersIDS[idCount++] = shader;
 
 		}
 
-
-		GLuint program = glCreateProgram();
-
-		for (auto& id : shadersIDS) {
-
-			glAttachShader(program, id);
-
-		}
 
 		glLinkProgram(program);
 
@@ -160,11 +163,10 @@ namespace Hawk {
 		}
 
 		//detach the shaders because they arent needed anymore
-		for (auto& id : shadersIDS) {
+		for (auto& id : shadersIDS)
 
 			glDetachShader(program, id);
 
-		}
 
 		m_RendererID = program;
 

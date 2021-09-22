@@ -25,6 +25,7 @@ namespace Hawk {
 		inline Window& GetWindow() { return *m_Window; };
 		inline static  Application& GetInstance() { return *s_Instance; }
 
+
 	private:
 
 		void Init();

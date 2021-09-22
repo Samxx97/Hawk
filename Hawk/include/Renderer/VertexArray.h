@@ -14,9 +14,9 @@ namespace Hawk {
 		virtual void AttachVertexBuffer(const Hawk::Ref<VertexBuffer>& vbuffer) = 0;
 		virtual void AttachIndexBuffer(const Hawk::Ref<IndexBuffer>& Ibuffer) = 0;
 
-		virtual const Hawk::Ref<IndexBuffer>& GetIndexBuffer() const = 0;
+		virtual const Ref<IndexBuffer>& GetIndexBuffer() const = 0;
 
-		static VertexArray* Create();
+		static Ref<VertexArray> Create();
 	};
 
 }

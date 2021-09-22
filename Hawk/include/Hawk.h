@@ -7,9 +7,6 @@
 #include "Core/log.h"
 #include "Layers/Layer.h"
 
-//provides an entry point 
-#include "core/EntryPoint.h"
-
 //Input 
 #include "Input/Input.h"
 #include "Input/KeyCodes.h"
@@ -21,12 +18,12 @@
 
 //Rendering
 #include "Renderer/Renderer.h"
+#include "Renderer/Renderer2D.h"
 #include "Renderer/RenderCommand.h"
 
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Texture.h"
-#include "Renderer/Camera/OrthographicCamera.h"
-
+#include "Renderer/Camera/OrthoGraphicCameraController.h"
 
 

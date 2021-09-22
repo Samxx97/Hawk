@@ -2,7 +2,7 @@
 #include "Core/Core.h"
 
 #include "ImGui/ImGuiLayer.h"
-
+#include "Renderer/Renderer.h"
 
 namespace Hawk {
 
@@ -51,6 +51,8 @@ namespace Hawk {
 		m_Window = std::unique_ptr<Window>(Window::Create(m_EventDispatcher));
 		Input::setInput(m_Window->GetInput());
 
+		Renderer::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
@@ -62,12 +64,10 @@ namespace Hawk {
 
 	void Application::PushLayer(Layer* layer) {
 		m_LayerStack.pushLayer(layer);
-		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer) {
 		m_LayerStack.pushOverlay(layer);
-		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClosedEvent(WindowCloseEvent& event) {

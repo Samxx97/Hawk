@@ -10,6 +10,7 @@ namespace Hawk {
 	LayerStack::~LayerStack() {
 
 		for (Layer* layer : m_Layers) {
+			layer->OnDetach();
 			delete layer;
 		}
 	}
@@ -18,10 +19,12 @@ namespace Hawk {
 
 		m_Layers.emplace(begin() + m_LayerInsert, layer);
 		m_LayerInsert++;
+		layer->OnAttach();
 	}
 
 	void LayerStack::pushOverlay(Layer* layer) {
 		m_Layers.emplace_back(layer);
+		layer->OnAttach();
 	}
 
 	/*TOFIX : Possible Memory Leak when Popping a Layer and also  possible Invalidation of
